@@ -10,7 +10,7 @@ Create a `.Renviron` file using the example as a template `example.Renviron`, an
 - r-base 4.5.1-1.2204.0 
 - nginx 1.18.0
 - shiny-server 1.5.23.1030
-- Oracle ODBC driver
+- Oracle client and ODBC driver
 
 ## Oracle client
 You need to install the Oracle client, as a separate download on the Oracle web site https://www.oracle.com/database/technologies/instant-client/linux-x86-64-downloads.html
@@ -18,18 +18,41 @@ You need to install the Oracle client, as a separate download on the Oracle web 
 You can avoid the signon by using `wget` with the file target.
 
 ``` bash
-wget --no-check-certificate -c --header "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/otn/linux/instantclient/122010/instantclient-basic-linux.x64-12.2.0.1.0.zip
+wget https://download.oracle.com/otn_software/linux/instantclient/1928000/instantclient-basic-linux.x64-19.28.0.0.0dbru.zip
+wget https://download.oracle.com/otn_software/linux/instantclient/1928000/instantclient-odbc-linux.x64-19.28.0.0.0dbru.zip
 ```
+Unzip and install uzing the instructions. In my case, all libraries were place under `/opt/oracle/instantclient_19_28`.
+
 ## dynamic linking libraries
 To create an entry for Oracle, create `/etc/ld.so.conf.d/oracle-instantclient.conf` that contains the path of the libaries: 
 contentes of /etc/ld.so.conf.d/oracle-instantclient.conf:
 ```
 /opt/oracle/instantclient_19_28
 ```
-obviously change to whatever the location of the libraries.
+obviously change to whatever the location of the libraries and run `ldconfig`.
+
+In my case, I also copied the odbc libary `libsqora.so.19.1` under  `/opt/oracle/instantclient_19_28` and tested if the links are ok with by running `ldd libsqora.so.19.1`
+The reponse was that all linked libraries were found.
+``` bash
+        linux-vdso.so.1 (0x00007ffd6bd18000)
+        libdl.so.2 => /lib/x86_64-linux-gnu/libdl.so.2 (0x00007fea194cb000)
+        libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007fea19119000)
+        libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007fea194c6000)
+        libnsl.so.1 => /lib/x86_64-linux-gnu/libnsl.so.1 (0x00007fea190fd000)
+        librt.so.1 => /lib/x86_64-linux-gnu/librt.so.1 (0x00007fea194c1000)
+        libaio.so.1 => /lib/x86_64-linux-gnu/libaio.so.1 (0x00007fea194ba000)
+        libresolv.so.2 => /lib/x86_64-linux-gnu/libresolv.so.2 (0x00007fea190e9000)
+        libclntsh.so.19.1 => /opt/oracle/instantclient_19_28/libclntsh.so.19.1 (0x00007fea14e00000)
+        libclntshcore.so.19.1 => /opt/oracle/instantclient_19_28/libclntshcore.so.19.1 (0x00007fea14800000)
+        libodbcinst.so.2 => /lib/x86_64-linux-gnu/libodbcinst.so.2 (0x00007fea190d4000)
+        libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007fea145d7000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007fea194d9000)
+        libnnz19.so => /opt/oracle/instantclient_19_28/libnnz19.so (0x00007fea13e00000)
+        libltdl.so.7 => /lib/x86_64-linux-gnu/libltdl.so.7 (0x00007fea190c7000)
+```
 
 ## Oracle ODBC driver
-One way to check if the isntallation works is ro run the following:
+One way to check if the installation works is to run the following:
 ``` R
 library(odbc)
 odbcListDrivers()
