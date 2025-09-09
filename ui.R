@@ -1,6 +1,6 @@
 library(shiny)
 library(bslib)
-
+library(DT)
 
 ui <- page_sidebar(
   title = "Liste d'especes de la base de données PSE (Oracle) ",
@@ -13,6 +13,6 @@ ui <- page_sidebar(
     ),
   card(
     renderText("search_query"),
-    dataTableOutput("db_table_results")
+    DT::DTOutput("db_table_results")
   )
 )

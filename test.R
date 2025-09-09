@@ -1,8 +1,7 @@
-library(shiny)
-library(bslib)
+#Sys.setenv(ODBCSYSINI = "/etc/odbc")
+#install.packages("odbc")
 library(odbc)
 library(DBI)
-library(DT)
 
 
 make_db_connection <- function() {
@@ -33,8 +32,7 @@ return(data)
 }
 
 
-server <- function(input, output) {
-  db_connection <- make_db_connection()
-  output$search_query <- renderText({paste("Vous avez entré l'Aphia ID: ", input$user_aphia_id)})
-  output$db_table_results <- DT::renderDT({query_database(db_connection, input$user_aphia_id)})
-}
+print(odbcListDrivers())
+con = make_db_connection()
+
+print(con)
