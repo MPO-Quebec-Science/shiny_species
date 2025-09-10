@@ -164,7 +164,8 @@ renv::restore()
 renv::install("shiny@1.11.1") 
 renv::install("bslib@0.9.0") 
 renv::install("DBI@1.2.3") 
-renv::install("odbc@1.6.2") 
+renv::install("odbc@1.6.2")
+renv::install("DT@0.34.0")
 ```
 
 You may have to tweak the odbc driver string to work with your local setup. You will need to modify `ORACLE_DRIVER` in `.Renviron`.

@@ -8,8 +8,9 @@ ui <- page_sidebar(
     card(
       textInput("APHIA_ID", "AphiaID", value = ""),
       textInput("STRAP_CODE", "Code STRAP", value = ""),
-      textInput("COMMUN_NAME_EN", "Nom commun (an)", value = ""),
       textInput("COMMUN_NAME_FR", "Nom commun (fr)", value = ""),
+      textInput("COMMUN_NAME_EN", "Nom commun (an)", value = ""),
+      textInput("SCIENTIF_NAME", "Nom scientifique", value = ""),
       submitButton("Filtrer")
     ),
 ),

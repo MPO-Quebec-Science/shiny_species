@@ -37,11 +37,14 @@ query_database <- function(con, input_text_fields = NULL){
   if (nzchar(input_text_fields$STRAP_CODE)) {
     query <- paste(query, "AND STRAP_CODE LIKE '%", input_text_fields$STRAP_CODE, "%'", sep="")
   }
-  if (nzchar(input_text_fields$COMMUN_NAME_EN)) {
-    query <- paste(query, "AND COMMUN_NAME_EN LIKE '%", input_text_fields$COMMUN_NAME_EN, "%'", sep="")
-  }
   if (nzchar(input_text_fields$COMMUN_NAME_FR)) {
-    query <- paste(query, "AND COMMUN_NAME_FR LIKE '%", input_text_fields$COMMUN_NAME_FR, "%'", sep="")
+    query <- paste(query, "AND COMMUN_NAME_FR LIKE '%", input_text_fields$COMMUN_NAME_FR, "%'  COLLATE BINARY_AI", sep="")
+  }
+  if (nzchar(input_text_fields$COMMUN_NAME_EN)) {
+    query <- paste(query, "AND COMMUN_NAME_EN LIKE '%", input_text_fields$COMMUN_NAME_EN, "%' COLLATE BINARY_AI", sep="")
+  }
+  if (nzchar(input_text_fields$SCIENTIF_NAME)) {
+    query <- paste(query, "AND SCIENTIF_NAME LIKE '%", input_text_fields$SCIENTIF_NAME, "%' COLLATE BINARY_AI", sep="")
   }
 
   data <- DBI::dbGetQuery(con, query)
@@ -53,14 +56,14 @@ server <- function(input, output) {
   db_connection <- make_db_connection()
   #construct a lst of legal user inputs
   # output$search_query <- renderText({paste("Vous avez entré l'Aphia ID: ", input$user_aphia_id)})
-
   output$db_table_results <- DT::renderDT({query_database(
     db_connection,
     list(
       APHIA_ID = input$APHIA_ID,
-      COMMUN_NAME_EN = input$COMMUN_NAME_EN,
+      STRAP_CODE = input$STRAP_CODE,
       COMMUN_NAME_FR = input$COMMUN_NAME_FR,
-      STRAP_CODE = input$STRAP_CODE
+      COMMUN_NAME_EN = input$COMMUN_NAME_EN,
+      SCIENTIF_NAME = input$SCIENTIF_NAME
     )
     )})
 }
