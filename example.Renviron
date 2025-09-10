@@ -3,5 +3,8 @@
 # N.B Le fichier .Renviron peut rester au meme emplacerment que CE fichier (racine du document)
 # N.B Le fichier .Renviron peut être déplacé au dossier home de l'usager c:\users\TON_NOM 
 
+# the shiny-server uses this string, only change this for local dev
+ORACLE_DRIVER = "{Oracle 19 ODBC driver}"
+
 ORACLE_USER = "METTRE_NOM_ICI"
 ORACLE_PASSWORD = "METTRE_MOT_DE_PASSE_ICI"

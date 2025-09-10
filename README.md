@@ -148,3 +148,26 @@ source("server.R")
 shinyApp(ui = ui, server = server)
 ```
 
+# dev
+To develop, you need to create the same environment that is running on the shiny-server.
+
+
+Install `renv` to reproduce the server environment.
+Init the renv from renv.lock, or manually create it by installing:
+
+
+``` R
+# either load the lockfile
+renv::restore()
+
+# or install what you need
+renv::install("shiny@1.11.1") 
+renv::install("bslib@0.9.0") 
+renv::install("DBI@1.2.3") 
+renv::install("odbc@1.6.2") 
+```
+
+You may have to tweak the odbc driver string to work with your local setup. You will need to modify `ORACLE_DRIVER` in `.Renviron`.
+For example, when installing from the software center 
+`ORACLE_DRIVER="{Oracle in 12.2.0_Instant_x64}"`
+
