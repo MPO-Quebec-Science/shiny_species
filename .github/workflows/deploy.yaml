@@ -23,11 +23,15 @@ jobs:
       - name: Checkout repo  
         uses: actions/checkout@v4
 
-      - name: setup R
-        uses: r-lib/actions/setup-r@v2
-        with:
-          use-public-rspm: true
-          r-version: renv
+    #   - name: setup R (remember to set PATH="$HOME/R-4.2.2/bin:$PATH" in .bashrc)
+    #     run: |
+    #         cd /home/shiny_species/
+    #         wget https://cran.r-project.org/src/base/R-4/R-4.2.2.tar.gz
+    #         tar -zxf R-4.2.2.tar.gz
+    #         cd /home/shiny_species/R-4.2.2
+    #         ./configure
+    #         make -j8
+    #     shell: bash
 
       - name: Restore renv packages
         uses: r-lib/actions/setup-renv@v2
