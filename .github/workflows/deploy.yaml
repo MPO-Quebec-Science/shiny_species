@@ -24,6 +24,7 @@ jobs:
         uses: actions/checkout@v4
 
     #   - name: setup R (remember to set PATH="$HOME/R-4.2.2/bin:$PATH" in .bashrc)
+    #     shell: bash
     #     run: |
     #         cd /home/shiny_species/
     #         wget https://cran.r-project.org/src/base/R-4/R-4.2.2.tar.gz
@@ -31,29 +32,26 @@ jobs:
     #         cd /home/shiny_species/R-4.2.2
     #         ./configure
     #         make -j8
-    #     shell: bash
 
       - name: Restore renv packages
         uses: r-lib/actions/setup-renv@v2
 
       - name: Restore renv in deploy directory
+        shell: Rscript {0}
         run: |
           renv::restore(prompt=FALSE)
-          # /home/shiny_species/actions-runner/_work/_temp/renv/cache/v5/R-4.2/x86_64-pc-linux-gnu
-          # /home/shiny_species/actions-runner/_work/shiny_species/shiny_species/renv/library/R-4.2/x86_64-pc-linux-gnu
-          # cp -R  ${{ env.RENV_PATHS_ROOT }} /home/shiny_species/actions-runner/_work/shiny_species/shiny_species/renv 
-        shell: Rscript {0}
 
       - name: Copy .Renviron for test runner
+        shell: bash
         run: |
           cp  /home/shiny_species/.Renviron .
-        shell: bash
 
-      - names: restart shiny server
-      # visudo -f /etc/sudoers.d/custom_service_restart
-      # shiny_species ALL=NOPASSWD: /usr/bin/systemctl restart shiny-server.service
-       run:
-        sudo systemctl restart shiny-server.service
+      - name: restart shiny server
+        shell: bash
+          # visudo -f /etc/sudoers.d/custom_service_restart
+          # shiny_species ALL=NOPASSWD: /usr/bin/systemctl restart shiny-server.service
+        run: |
+          sudo systemctl restart shiny-server.service
         
     #   - name: Install dependencies
     #     run: |
