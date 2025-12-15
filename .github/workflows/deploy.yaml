@@ -1,0 +1,41 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+#
+# See https://github.com/r-lib/actions/tree/master/examples#readme for
+# additional example workflows available for the R community.
+
+name: R
+
+on:
+  push:
+    branches: [ "main" ]
+  # Do not use PR triggers for selfhosted action runners 
+  # pull_request:
+  #   branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: self-hosted
+    strategy:
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up R 4.5.1
+        uses: r-lib/actions/setup-r@6f6e5bc62fba3a704f74e7ad7ef7676c5c6a2590
+        with:
+          r-version: 4.5.1
+      - name: Copy .Renviron for test runner
+        run: |
+          cp  /root/actions-runner/.Renviron .
+        shell: bash
+      - name: Install dependencies
+        run: |
+          options(repos = c(CRAN = "cran.mirror.rafal.ca"))
+          install.packages(c("remotes", "rcmdcheck", "testthat"))
+          remotes::install_deps(dependencies = TRUE,  upgrade = "never")
+        shell: Rscript {0}
