@@ -11,7 +11,7 @@ ui <- page_sidebar(
       textInput("COMMUN_NAME_FR", "Nom commun (fr)", value = ""),
       textInput("COMMUN_NAME_EN", "Nom commun (an)", value = ""),
       textInput("SCIENTIF_NAME", "Nom scientifique", value = ""),
-      submitButton("Filtrer")
+      submitButton("Filtrer!")
     ),
 ),
   card(
