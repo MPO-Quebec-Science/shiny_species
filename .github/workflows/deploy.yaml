@@ -32,6 +32,6 @@ jobs:
       - name: Install dependencies
         run: |
           options(repos = c(CRAN = "cran.mirror.rafal.ca"))
-          install.packages(c("remotes", "rcmdcheck", "testthat"))
-          remotes::install_deps(dependencies = TRUE,  upgrade = "never")
+          install.packages(c("remotes", "rcmdcheck", "testthat"),lib = "~/R/library")
+          remotes::install_deps(dependencies = TRUE,  upgrade = "never", lib = "~/R/library")
         shell: Rscript {0}
