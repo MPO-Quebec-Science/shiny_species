@@ -36,11 +36,23 @@ jobs:
       - name: Restore renv packages
         uses: r-lib/actions/setup-renv@v2
 
+      - name: Restore renv in deploy directory
+        run: |
+            renv::restore()
+
+        shell: Rscript {0}
+
       - name: Copy .Renviron for test runner
         run: |
           cp  /home/shiny_species/.Renviron .
         shell: bash
 
+      - names: restart shiny server
+      # visudo -f /etc/sudoers.d/custom_service_restart
+      # shiny_species ALL=NOPASSWD: /usr/bin/systemctl restart shiny-server.service
+       run:
+        sudo systemctl restart shiny-server.service
+        
     #   - name: Install dependencies
     #     run: |
     #       options(repos = c(CRAN = "cran.mirror.rafal.ca"))
