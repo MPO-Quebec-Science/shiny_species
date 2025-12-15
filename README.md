@@ -1,3 +1,4 @@
+[![Deploy](https://github.com/MPO-Quebec-Science/shiny_species/actions/workflows/deploy.yaml/badge.svg?branch=prod)](https://github.com/MPO-Quebec-Science/shiny_species/actions/workflows/deploy.yaml)
 # shiny_species
 Shiny app to interact with the species list on the PSE database  (Oracle)
 
