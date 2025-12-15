@@ -36,6 +36,10 @@ jobs:
       - name: Restore renv packages
         uses: r-lib/actions/setup-renv@v2
 
+      - name: Unset
+        shell: bash
+        run: unset RENV_PATHS_ROOT
+
       - name: Restore renv in deploy directory
         shell: Rscript {0}
         run: |
