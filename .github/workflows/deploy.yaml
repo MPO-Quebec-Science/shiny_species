@@ -38,8 +38,10 @@ jobs:
 
       - name: Restore renv in deploy directory
         run: |
-            renv::restore()
-
+          renv::restore(prompt=FALSE)
+          # /home/shiny_species/actions-runner/_work/_temp/renv/cache/v5/R-4.2/x86_64-pc-linux-gnu
+          # /home/shiny_species/actions-runner/_work/shiny_species/shiny_species/renv/library/R-4.2/x86_64-pc-linux-gnu
+          # cp -R  ${{ env.RENV_PATHS_ROOT }} /home/shiny_species/actions-runner/_work/shiny_species/shiny_species/renv 
         shell: Rscript {0}
 
       - name: Copy .Renviron for test runner
