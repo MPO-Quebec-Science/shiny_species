@@ -10,10 +10,7 @@ name: R
 
 on:
   push:
-    branches: [ "main" ]
-  # Do not use PR triggers for selfhosted action runners 
-  # pull_request:
-  #   branches: [ "main" ]
+    branches: [ "prod" ]
 
 permissions:
   contents: read
@@ -21,7 +18,6 @@ permissions:
 jobs:
   build:
     runs-on: self-hosted
-    strategy:
 
     steps:
       - uses: actions/checkout@v4
@@ -31,7 +27,7 @@ jobs:
           r-version: 4.5.1
       - name: Copy .Renviron for test runner
         run: |
-          cp  /root/actions-runner/.Renviron .
+          cp  /home/shiny_species/.Renviron .
         shell: bash
       - name: Install dependencies
         run: |
