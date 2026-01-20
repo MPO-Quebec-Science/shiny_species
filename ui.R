@@ -20,6 +20,6 @@ ui <- page_sidebar(
   ),
   downloadButton(
     outputId = "downloadData",
-    label = "Download Data"
+    label = "Télécharger CSV"
   )
 )
