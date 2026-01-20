@@ -11,11 +11,15 @@ ui <- page_sidebar(
       textInput("COMMUN_NAME_FR", "Nom commun (fr)", value = ""),
       textInput("COMMUN_NAME_EN", "Nom commun (an)", value = ""),
       textInput("SCIENTIF_NAME", "Nom scientifique", value = ""),
-      submitButton("Filtrer!")
+      actionButton("submit", "Filtrer!")
     ),
-),
+  ),
   card(
     renderText("search_query"),
     DT::DTOutput("db_table_results")
+  ),
+  downloadButton(
+    outputId = "downloadData",
+    label = "Download Data"
   )
 )
