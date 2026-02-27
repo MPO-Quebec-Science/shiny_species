@@ -4,7 +4,8 @@ library(DT)
 
 ui <- page_sidebar(
   title = "Liste d'especes de la base de données PSE (Oracle) ",
-  sidebar = sidebar("Recherche",
+  sidebar = sidebar(
+    "Recherche",
     card(
       textInput("APHIA_ID", "AphiaID", value = ""),
       textInput("STRAP_CODE", "Code STRAP", value = ""),
